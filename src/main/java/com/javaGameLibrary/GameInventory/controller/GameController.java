@@ -1,11 +1,14 @@
 package com.javaGameLibrary.GameInventory.controller;
 
 import com.javaGameLibrary.GameInventory.Domain.Game;
+import com.javaGameLibrary.GameInventory.Domain.Price;
+import com.javaGameLibrary.GameInventory.Domain.Publisher;
 import com.javaGameLibrary.GameInventory.controller.dto.GameRequest;
 import com.javaGameLibrary.GameInventory.repository.implementation.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/games")
@@ -20,11 +23,12 @@ public class GameController {
 //        return BetDto.fromBet(bet);
 //    }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Game>  getAllGames() {
-
+        var games = gameRepository.getAllGames();
         return gameRepository.getAllGames();
     }
+
 
 //    @GetMapping("/{gameId}")
 //    public Game getGameById(@PathVariable Long gameId) {

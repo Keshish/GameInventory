@@ -23,7 +23,6 @@ public class GameRepository implements IGameRepository {
     @Override
     public List<Game> getAllGames() {
         try {
-            var e=entityManager.createQuery("SELECT g FROM Game g", Game.class).getResultList();
             return entityManager.createQuery("SELECT g FROM Game g", Game.class).getResultList();
         } catch (Exception e) {
             log.error("Error in getAllGames: " + e.getMessage());
