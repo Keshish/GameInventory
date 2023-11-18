@@ -1,15 +1,14 @@
 package com.javaGameLibrary.GameInventory.controller;
 
 import com.javaGameLibrary.GameInventory.Domain.Game;
+import com.javaGameLibrary.GameInventory.controller.dto.GameRequest;
 import com.javaGameLibrary.GameInventory.repository.implementation.GameRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/bets")
+@RequestMapping("/games")
 @RequiredArgsConstructor
 @RestController
 public class GameController {
@@ -32,10 +31,13 @@ public class GameController {
 //        return gameService.getGameById(gameId);
 //    }
 //
-//    @PostMapping
-//    public Game addGame(@RequestBody Game game) {
-//        return gameService.addGame(game);
-//    }
+@PostMapping
+public Game addGame(@RequestBody GameRequest gameRequest) {
+    // Convert the GameRequest to the internal Game entity
+    Game game = convertToEntity(gameRequest);
+    // Save the entity using the repository
+    return gameRepository.addGame(game);
+}
 //
 //    @PutMapping("/{gameId}")
 //    public Game updateGame(@PathVariable Long gameId, @RequestBody Game game) {
@@ -48,4 +50,14 @@ public class GameController {
 //    }
 
 
+    private Game convertToEntity(GameRequest gameRequest) {
+        // You can manually map fields from the request to the entity
+        Game game = new Game();
+        game.setTitle(gameRequest.getTitle());
+        game.setReleaseDate(gameRequest.getReleaseDate());
+        game.setGenre(gameRequest.getGenre());
+        game.setPlatform(gameRequest.getPlatform());
+        // You might want to set other properties if needed
+        return game;
+    }
 }

@@ -18,7 +18,9 @@ public class Price {
     @Column(name = "price_id")
     private Long priceId;
 
+    @Column(name = "price_value")  // Corrected column name
     private double value;
+
     private String currency;
 
     @OneToOne
@@ -26,3 +28,4 @@ public class Price {
     private Game game;
 
 }
+

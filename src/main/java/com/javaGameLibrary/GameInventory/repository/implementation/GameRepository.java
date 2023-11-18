@@ -7,6 +7,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -21,8 +22,15 @@ public class GameRepository implements IGameRepository {
 
     @Override
     public List<Game> getAllGames() {
-        return entityManager.createQuery("SELECT g FROM Game g", Game.class).getResultList();
+        try {
+            var e=entityManager.createQuery("SELECT g FROM Game g", Game.class).getResultList();
+            return entityManager.createQuery("SELECT g FROM Game g", Game.class).getResultList();
+        } catch (Exception e) {
+            log.error("Error in getAllGames: " + e.getMessage());
+            throw e;
+        }
     }
+
 
     @Override
     public Game getGameById(int id) {
