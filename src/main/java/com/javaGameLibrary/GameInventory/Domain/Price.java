@@ -2,15 +2,15 @@ package com.javaGameLibrary.GameInventory.Domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @Entity
 @Table(name = "price")
 @Data
 @AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class Price {
 

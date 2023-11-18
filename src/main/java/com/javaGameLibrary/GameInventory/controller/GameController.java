@@ -5,7 +5,10 @@ import com.javaGameLibrary.GameInventory.Domain.Price;
 import com.javaGameLibrary.GameInventory.Domain.Publisher;
 import com.javaGameLibrary.GameInventory.controller.dto.GameRequest;
 import com.javaGameLibrary.GameInventory.repository.implementation.GameRepository;
+import com.javaGameLibrary.GameInventory.repository.implementation.PublisherRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import java.util.List;
 @RestController
 public class GameController {
    private final GameRepository gameRepository;
+   private  final PublisherRepository publisherRepository;
 
 //    @GetMapping(value = "/{matchId}/{username}")
 //    public BetDto getBet(@PathVariable Integer matchId, @PathVariable String username) {
@@ -36,11 +40,28 @@ public class GameController {
 //    }
 //
 @PostMapping
-public Game addGame(@RequestBody GameRequest gameRequest) {
-    // Convert the GameRequest to the internal Game entity
-    Game game = convertToEntity(gameRequest);
-    // Save the entity using the repository
-    return gameRepository.addGame(game);
+public ResponseEntity<Game> createGame(@RequestBody GameRequest gameDto) {
+    Publisher publisher = publisherRepository.getPublisherById(gameDto.getPublisherId())
+            .orElseThrow(() -> new IllegalArgumentException("Publisher not found"));
+
+    Game game = new Game();
+    game.setTitle(gameDto.getTitle());
+    game.setReleaseDate(gameDto.getReleaseDate());
+    game.setGenre(gameDto.getGenre());
+    game.setPlatform(gameDto.getPlatform());
+
+    Price price = new Price();
+    price.setValue(gameDto.getPriceValue());
+    price.setCurrency(gameDto.getCurrency());
+    price.setGame(game);
+
+    game.setPrice(price);
+    game.setPublisher(publisher);
+
+    // Perform the repository operation directly in the controller
+    Game createdGame = gameRepository.addGame(game);
+
+    return new ResponseEntity<>(createdGame, HttpStatus.CREATED);
 }
 //
 //    @PutMapping("/{gameId}")

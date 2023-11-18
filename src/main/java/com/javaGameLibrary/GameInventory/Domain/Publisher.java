@@ -1,11 +1,11 @@
 package com.javaGameLibrary.GameInventory.Domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "publisher")
 @Data
 @AllArgsConstructor

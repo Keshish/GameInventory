@@ -8,5 +8,7 @@ public class GameRequest {
     private String releaseDate;
     private String genre;
     private String platform;
-    // You might add validation annotations here based on your requirements
+    private Double priceValue;
+    private String currency;
+    private Long publisherId;
 }
