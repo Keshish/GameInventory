@@ -5,7 +5,7 @@ import com.javaGameLibrary.GameInventory.Domain.Publisher;
 import java.util.List;
 import java.util.Optional;
 
-public interface PublishRepository {
+public interface IPublisherRepository {
 
     List<Publisher> getAllPublishers();
 

@@ -1,7 +1,7 @@
 package com.javaGameLibrary.GameInventory.repository.implementation;
 
 import com.javaGameLibrary.GameInventory.Domain.Publisher;
-import com.javaGameLibrary.GameInventory.repository.abstraction.PublishRepository;
+import com.javaGameLibrary.GameInventory.repository.abstraction.IPublisherRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class PublisherRepository implements PublishRepository {
+public class PublisherRepository implements IPublisherRepository {
     @PersistenceContext
     private final EntityManager entityManager;
 

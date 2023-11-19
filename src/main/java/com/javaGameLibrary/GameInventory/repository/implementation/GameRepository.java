@@ -9,11 +9,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 
 @Slf4j
 @Repository
+@Service
 @RequiredArgsConstructor
 public class GameRepository implements IGameRepository {
 
@@ -21,6 +24,7 @@ public class GameRepository implements IGameRepository {
     private final EntityManager entityManager;
 
     @Override
+    @Transactional
     public List<Game> getAllGames() {
         try {
             return entityManager.createQuery("SELECT g FROM Game g", Game.class).getResultList();
@@ -32,6 +36,7 @@ public class GameRepository implements IGameRepository {
 
 
     @Override
+    @Transactional
     public Game getGameById(int id) {
         return entityManager.find(Game.class, id);
     }
