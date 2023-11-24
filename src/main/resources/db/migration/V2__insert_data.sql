@@ -29,3 +29,5 @@ INSERT INTO inventory (game_id, quantity) VALUES
                                               (3, 200),
                                               (4, 150),
                                               (5, 120);
+
+

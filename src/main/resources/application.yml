@@ -21,6 +21,12 @@ spring:
     init:
       username: sa
       password: ""
+
+logging:
+ level:
+  org:
+   springframework:
+    security: DEBUG
 ---
 
 

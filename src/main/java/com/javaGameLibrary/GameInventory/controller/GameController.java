@@ -1,5 +1,4 @@
 package com.javaGameLibrary.GameInventory.controller;
-
 import com.javaGameLibrary.GameInventory.Domain.Game;
 import com.javaGameLibrary.GameInventory.Domain.Price;
 import com.javaGameLibrary.GameInventory.Domain.Publisher;
@@ -14,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/games")
@@ -99,16 +100,4 @@ public class GameController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-//
-//    @PutMapping("/{gameId}")
-//    public Game updateGame(@PathVariable Long gameId, @RequestBody Game game) {
-//        return gameService.updateGame(gameId, game);
-//    }
-//
-//    @DeleteMapping("/{gameId}")
-//    public void deleteGame(@PathVariable Long gameId) {
-//        gameService.deleteGame(gameId);
-//    }
 }
