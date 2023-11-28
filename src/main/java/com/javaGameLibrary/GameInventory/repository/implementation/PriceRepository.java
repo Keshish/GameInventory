@@ -28,4 +28,14 @@ public class PriceRepository implements IPriceRepository {
         }
     }
 
+    @Override
+    public void deletePrice(Price price) {
+        try {
+            entityManager.remove(price);
+        } catch (Exception e) {
+            log.error("Error in deletePrice: " + e.getMessage());
+            throw e;
+        }
+    }
+
 }

@@ -24,7 +24,7 @@ public class Game {
     private String genre;
     private String platform;
 
-    @OneToOne(mappedBy = "game")
+    @OneToOne(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Price price;
 

@@ -1,13 +1,16 @@
 package com.javaGameLibrary.GameInventory.controller;
 import com.javaGameLibrary.GameInventory.Domain.Game;
+import com.javaGameLibrary.GameInventory.Domain.Inventory;
 import com.javaGameLibrary.GameInventory.Domain.Price;
 import com.javaGameLibrary.GameInventory.Domain.Publisher;
 import com.javaGameLibrary.GameInventory.controller.dto.GameRequest;
 import com.javaGameLibrary.GameInventory.repository.abstraction.IGameRepository;
+import com.javaGameLibrary.GameInventory.repository.abstraction.IInventoryRepository;
 import com.javaGameLibrary.GameInventory.repository.abstraction.IPriceRepository;
 import com.javaGameLibrary.GameInventory.repository.abstraction.IPublisherRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,7 @@ public class GameController {
     private final IGameRepository gameRepository;
     private final IPublisherRepository publisherRepository;
     private final IPriceRepository priceRepository;
+    private final IInventoryRepository inventoryRepository;
 
     @GetMapping("/all")
     public List<Game> getAllGames() {
@@ -100,4 +104,31 @@ public class GameController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @DeleteMapping("/{gameId}")
+    @Transactional
+    public ResponseEntity<String> deleteGame(@PathVariable int gameId) {
+        Game game = gameRepository.getGameById(gameId);
+
+        if (game == null) {
+            return new ResponseEntity<>("Game not found", HttpStatus.NOT_FOUND);
+        }
+
+        try {
+            Price price = game.getPrice();
+            if (price != null) {
+                priceRepository.deletePrice(price); // Assuming you have a deletePrice method
+            }
+            Inventory inventory = inventoryRepository.getinventoryById(gameId);
+            if (inventory != null) {
+                inventoryRepository.deleteInventoryById(inventory.getInventoryId().intValue());
+            }
+            gameRepository.deleteGame(gameId);
+
+            return new ResponseEntity<>("Game deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error deleting game: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

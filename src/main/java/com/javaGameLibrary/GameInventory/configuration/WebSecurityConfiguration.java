@@ -39,6 +39,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers(antMatcher("/h2-console/**")).permitAll()
                         .requestMatchers(antMatcher(HttpMethod.DELETE)).hasRole("ADMIN")
                         .requestMatchers(antMatcher("/games/**")).hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(antMatcher("/publishers/**")).hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->

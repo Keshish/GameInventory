@@ -30,7 +30,7 @@ This project is a game inventory management system built using Java Spring Boot 
     ```
 
 4. **Access the application:**
-   Open your web browser and go to [http://localhost:8080](http://localhost:8080)
+   Open your web browser and go to [http://localhost:7474](http://localhost:7474)
 
 ## Database Initialization
 
@@ -50,14 +50,14 @@ Two default users are available for testing:
 
 ## API Endpoints
 
-- **Game Inventory API:** [http://localhost:8080/api/games](http://localhost:8080/api/games)
+- **Game Inventory API:** [http://localhost:7474/api/games](http://localhost:7474/api/games)
     - List all games: `GET /api/games`
     - Get a specific game: `GET /api/games/{id}`
     - Add a new game: `POST /api/games`
     - Update an existing game: `PUT /api/games/{id}`
     - Delete a game: `DELETE /api/games/{id}`
 
-- **User Authentication API:** [http://localhost:8080/api/auth](http://localhost:8080/api/auth)
+- **User Authentication API:** [http://localhost:7474/api/auth](http://localhost:7474/api/auth)
     - Login: `POST /api/auth/login`
 
 ## Testing

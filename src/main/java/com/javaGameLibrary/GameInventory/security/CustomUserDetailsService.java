@@ -1,7 +1,7 @@
 package com.javaGameLibrary.GameInventory.security;
 
 import com.javaGameLibrary.GameInventory.Domain.User;
-import com.javaGameLibrary.GameInventory.repository.abstraction.UserRepository;
+import com.javaGameLibrary.GameInventory.repository.abstraction.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final IUserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws
             UsernameNotFoundException {
