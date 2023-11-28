@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Slf4j
 @Repository
@@ -20,6 +22,16 @@ public class InventoryRepository implements IInventoryRepository {
     private final EntityManager entityManager;
 
 
+    @Override
+    public List<Inventory> getAllInventories() {
+        try {
+            return entityManager.createQuery("SELECT i FROM Inventory i", Inventory.class)
+                    .getResultList();
+        } catch (Exception e) {
+            log.error("Error in getAllInventory: " + e.getMessage());
+            throw e;
+        }
+    }
     @Override
     public Inventory getinventoryById(int id) {
         try {

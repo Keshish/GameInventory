@@ -24,12 +24,15 @@ public class PublisherController {
 
     private final IPublisherRepository publisherRepository;
 
+    @Operation(summary = "Retrieve paginated list of all publishers")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Paginated list of all publishers retrieved successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid URL parameters supplied")
+    })
     @GetMapping("/all")
     public List<Publisher> getAllPublishers() {
         return publisherRepository.getAllPublishers();
-
     }
-
     @Operation(summary = "Retrieve paginated list of publishers")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Paginated list of publishers retrieved"),

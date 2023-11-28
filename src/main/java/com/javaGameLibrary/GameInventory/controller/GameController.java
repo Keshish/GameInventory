@@ -8,6 +8,9 @@ import com.javaGameLibrary.GameInventory.repository.abstraction.IGameRepository;
 import com.javaGameLibrary.GameInventory.repository.abstraction.IInventoryRepository;
 import com.javaGameLibrary.GameInventory.repository.abstraction.IPriceRepository;
 import com.javaGameLibrary.GameInventory.repository.abstraction.IPublisherRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -28,11 +31,23 @@ public class GameController {
     private final IPriceRepository priceRepository;
     private final IInventoryRepository inventoryRepository;
 
+    @Operation(summary = "Retrieve list of all games")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "all games retrieved successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid URL parameters supplied")
+    })
     @GetMapping("/all")
     public List<Game> getAllGames() {
         return gameRepository.getAllGames();
     }
 
+
+    @Operation(summary = "Create a new game")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Game created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request parameters or Publisher not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PostMapping
     @Transactional
     public ResponseEntity<Game> createGame(@RequestBody GameRequest gameDto) {
@@ -67,6 +82,13 @@ public class GameController {
         }
     }
 
+
+    @Operation(summary = "Update an existing game")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Game updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request parameters, Game not found, or Publisher not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<Game> updateGame(@PathVariable int id, @RequestBody GameRequest gameDto) {
@@ -104,6 +126,12 @@ public class GameController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @Operation(summary = "Delete a game by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Game deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Game not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @DeleteMapping("/{gameId}")
     @Transactional
     public ResponseEntity<String> deleteGame(@PathVariable int gameId) {
