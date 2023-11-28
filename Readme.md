@@ -10,8 +10,8 @@ This project is a game inventory management system built using Java Spring Boot 
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/game-inventory.git
-    cd game-inventory
+    git clone https://github.com/Keshish/GameInventory
+    cd GameInventory
     ```
 
 2. **Build the project using Maven:**
