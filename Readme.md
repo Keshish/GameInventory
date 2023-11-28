@@ -50,19 +50,20 @@ Two default users are available for testing:
 
 ## API Endpoints
 
-- **Game Inventory API:** [http://localhost:7474/api/games](http://localhost:7474/api/games)
-    - List all games: `GET /api/games`
-    - Get a specific game: `GET /api/games/{id}`
-    - Add a new game: `POST /api/games`
-    - Update an existing game: `PUT /api/games/{id}`
-    - Delete a game: `DELETE /api/games/{id}`
+### Game Inventory API
+- List all games: `GET /api/games/all`
+- Create a new game: `POST /api/games`
+- Update an existing game: `PUT /api/games/{id}`
+- Delete a game: `DELETE /api/games/{id}`
 
-- **User Authentication API:** [http://localhost:7474/api/auth](http://localhost:7474/api/auth)
-    - Login: `POST /api/auth/login`
+### Inventory API
+- List all inventories: `GET /api/inventories/all`
 
-## Testing
+### Publisher API
+- List all publishers: `GET /api/publishers/all`
+- Get paginated list of publishers: `GET /api/publishers/paginated-publishers`
 
-To run the tests, use the following Maven command:
+### User Authentication API
+- Login: `POST /api/auth/login`
 
-```bash
-mvn test
+

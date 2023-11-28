@@ -13,8 +13,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.flywaydb.core.internal.resource.classpath.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +34,7 @@ public class GameController {
     private final IPublisherRepository publisherRepository;
     private final IPriceRepository priceRepository;
     private final IInventoryRepository inventoryRepository;
+    private final ResourceLoader resourceLoader;
 
     @Operation(summary = "Retrieve list of all games")
     @ApiResponses(value = {
@@ -158,5 +163,31 @@ public class GameController {
         }
     }
 
+    @Operation(summary = "Get a JPG resource")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "JPG resource retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "JPG resource not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/image")
+    public ResponseEntity<Resource> getJpgResource() {
+        try {
+            // Assuming the JPG file is in the "static" folder
+            Resource resource = resourceLoader.getResource("classpath:static/Java.jpg");
+
+            // Check if the resource exists
+            if (resource.exists()) {
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // Handle the exception appropriately
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 }
